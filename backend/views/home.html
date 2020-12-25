@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+<style>
+        .hide {
+                visibility: hidden;
+        }
+
+        .show {
+                visibility: visible;
+        }
+</style>
+
+<body>
+        <div class="container" style="display:flex; justify-content:space-between">
+                <div class="row">
+                        <h1>Container</h1>
+                        <form action="/admin" method="POST">
+
+                                Category: <input type="text" name='categoryname' value="">
+                                <button type="submit" id="addcat">Submit</button>
+                        </form>
+                </div>
+                <div class="row">
+                        
+                        {% for i in itemsd["categories"] %}
+                        <li><button type="button" class="catButton" onclick="showitemForm('{{ i }}')">{{ i }}</button></li>
+                
+
+                        <h2> Items</h2>
+                        <ul >
+                        
+                          {% for j in itemsd.items[i] %}    
+                                <li style="border-style:solid;">
+                                    name: {{ j.name }}<br>
+                                    price: {{ j.price}}<br>
+                                    size: {{ j.size }}<br>
+                                    description: {{ j.description }}<br>
+                                </li>
+                                <br>
+                          {% endfor %}  
+                              
+                                
+                        </ul>
+                        <div class="{{i}}" style="visibility: hidden;">
+                                <form action="/admin" method="POST">
+                                        ItemName:<input type='text' name='itemname' value=""><br>
+                                        Price:<input type='text' name='price' value=""><br>
+                                        Size:<input type='text' name='size' value=""><br>
+                                        Description:<input type='text' name='description' value=""><br>
+                                        <input type="text" name="category" value="{{i}}" style="visibility:hidden;">
+                                        <button type="submit">Submit</button>
+                                </form>
+                        </div>
+                        {% endfor %}
+                </div>
+        </div>
+        <script >
+                
+                function showitemForm(classvalue){
+                        console.log('its working');
+                        document.querySelector("."+classvalue).style.visibility="visible";
+                }
+                
+        </script>
+        <script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
+</body>
+
+</html>
